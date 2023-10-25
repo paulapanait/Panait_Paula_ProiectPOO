@@ -1,302 +1,309 @@
-//Deoarece initialele mele sunt PPA, voi face clasele "Palarie", "Pix" si "Autoturisme"
+//Domeniul ales este ASTRONOMIE
 
 #include <iostream>
-
+#define BLUE    "\033[34m"
+#define RESET   "\033[0m"
 using namespace std;
 
-class Palarie
+class Planeta
 {
 public:
-	static int nrPalarii;
-	const int codProdus;
-	string producator;
-	float pret;
-	int nrCulori;
-	string* culori;
-
-	Palarie(float pret) : pret(pret), codProdus(1234)
-	{
-		nrPalarii++;
-		this->producator = "Maddame Paris";
-		this->pret = pret;
-		this->nrCulori = 0;
-		this->culori = NULL;
-	}
-
-	Palarie(string producator, float pret) : codProdus(1234)
-	{
-		nrPalarii++;
-		this->producator = producator;
-		this->pret = pret;
-		this->nrCulori = 0;
-		this->culori = NULL;
-	}
-
-	Palarie(string producator, float pret, int nrCulori, string* culori) : codProdus(1234)
-	{
-		nrPalarii++;
-		this->producator = producator;
-		this->pret = pret;
-		this->nrCulori = nrCulori;
-		this->culori = new string[nrCulori];
-		for (int i = 0; i < nrCulori; i++)
-		{
-			this->culori[i] = culori[i];
-		}
-	}
-
-	~Palarie()
-	{
-		if (this->culori != NULL)
-		{
-			delete[]this->culori;
-		}
-	}
-
-	void afisareStaticaPalarii()
-	{
-		cout << "Magazinul nostru va pune la dispozitie o serie de " << nrPalarii << " palarii," << endl;
-	}
-
-	void afisarePalarii()
-	{
-		cout << "accesibile si pe site-ul nostru prin codul " << codProdus << endl;
-		cout << "de la designer-ul " << producator << ", la pretul unic de " << pret << endl;
-		cout << "si intr-o varietate de " << nrCulori << " culori: " << endl;
-
-		if (nrCulori != NULL)
-		{
-			for (int i = 0; i < nrCulori; i++)
-			{
-				cout << culori[i] << ", ";
-			}
-		}
-		else
-		{
-			cout << "indisponibile momentan";
-		}
-
-		cout << endl;
-	}
-};
-
-int Palarie::nrPalarii = 14;
-
-class Pix
-{
-public:
-	static int nrPixuri;
-	const int codProdus;
-	string producator;
-	float pret;
-	int nrCulori;
-	string* culori;
-
-	Pix(float pret) : pret(pret), codProdus(4321)
-	{
-		nrPixuri++;
-		this->producator = "BIC";
-		this->pret = pret;
-		this->nrCulori = 0;
-		this->culori = NULL;
-	}
-
-	Pix(string producator, float pret) : Pix(pret)
-	{
-		nrPixuri++;
-		this->producator = producator;
-		this->pret = pret;
-		this->nrCulori = 0;
-		this->culori = NULL;
-	}
-
-	Pix(string producator, float pret, int nrCulori, string* culori) : Pix(pret)
-	{
-		nrPixuri++;
-		this->producator = producator;
-		this->pret = pret;
-		this->nrCulori = nrCulori;
-		this->culori = new string[nrCulori];
-		for (int i = 0; i < nrCulori; i++)
-		{
-			this->culori[i] = culori[i];
-		}
-	}
-
-	~Pix()
-	{
-		if (this->culori != NULL)
-		{
-			delete[]this->culori;
-		}
-	}
-
-	void afisareStaticaPixuri()
-	{
-		cout << "Magazinul nostru va pune la dispozitie o serie de " << nrPixuri << " pixuri," << endl;
-	}
-
-	void afisarePixuri()
-	{
-		cout << "de la producatorul " << producator << ", la pretul unic de " << pret << endl;
-		cout << "si intr-o varietate de " << nrCulori << " culori: " << endl;
-
-		if (nrCulori != NULL)
-		{
-			for (int i = 0; i < nrCulori; i++)
-			{
-				cout << culori[i] << ", ";
-			}
-		}
-		else
-		{
-			cout << "indisponibile momentan";
-		}
-
-		cout << endl;
-
-		cout << "accesibile prin codul " << codProdus << endl;
-	}
-};
-
-int Pix::nrPixuri = 2;
-
-class Autoturism
-{
-public:
-	static int nrMasini;
-	const int codMasina;
-	string marca;
-	int putere;
+	static int locSistem;
+	const int nrObservatii;
+	string nume;
 	float greutate;
-	bool automata;
-	int nrDetinatori;
-	string* detinatori;
+	int nrSateliti;
+	string* sateliti;
 
-	Autoturism(int putere) : codMasina(9007)
+	Planeta(float greutate) : greutate(greutate), nrObservatii(12)
 	{
-		this->nrMasini = 12;
-		this->marca = "Bugatti";
-		this->putere = putere;
-		this->greutate = 2;
-		this->automata = true;
-		this->nrDetinatori = 0;
-		this->detinatori = NULL;
+		locSistem++;
+		this->nume = "Marte";
+		this->greutate = greutate;
+		this->nrSateliti = 0;
+		this->sateliti = NULL;
 	}
 
-	Autoturism(int nrMasini, int putere, string marca) : Autoturism(nrMasini)
+	Planeta(string nume, float greutate) : nrObservatii(12)
 	{
-		this->nrMasini = nrMasini;
-		this->putere = putere;
-		this->marca = marca;
-		this->greutate = 4;
-		this->automata = false;
-		this->nrDetinatori = 0;
-		this->detinatori = NULL;
+		locSistem++;
+		this->nume = nume;
+		this->greutate = greutate;
+		this->nrSateliti = 0;
+		this->sateliti = NULL;
 	}
 
-	Autoturism(int nrDetinatori, string* detinatori) : codMasina(9007)
+	Planeta(string nume, float greutate, int nrSateliti, string* sateliti) : nrObservatii(12)
 	{
-		this->nrMasini = 10;
-		this->putere = 120;
-		this->marca = "Maseratti";
-		this->greutate = 3;
-		this->automata = true;
-		this->nrDetinatori = nrDetinatori;
-		this->detinatori = new string[nrDetinatori];
-		for (int i = 0; i < nrDetinatori; i++)
+		locSistem++;
+		this->nume = nume;
+		this->greutate = greutate;
+		this->nrSateliti = nrSateliti;
+		this->sateliti = new string[nrSateliti];
+		for (int i = 0; i < nrSateliti;  i++)
 		{
-			this->detinatori[i] = detinatori[i];
+			this->sateliti[i] = sateliti[i];
 		}
 	}
 
-	~Autoturism()
+	~Planeta()
 	{
-		if (this->detinatori != NULL)
+		if (this->sateliti != NULL)
 		{
-			delete[]this->detinatori;
+			delete[]this->sateliti;
 		}
 	}
 
-	void afisareStaticaAutoturisme()
+	void afisareStaticaPlaneta()
 	{
-		cout << "Va punem la dispozitie o gama variata de " << nrMasini << " masini " << endl;
+		cout << "A " << locSistem << "-a planeta de la Soare," << endl;
 	}
 
-	void afisareAutoturisme()
+	void afisarePlaneta()
 	{
-		cout << "din marca " << marca << " cu puterea de " << putere << " W si o greutate de " << endl;
-		cout << greutate << " tone, cu o cutie " << (automata ? "automata" : "manuala") << " si " << endl;
-		
-		if (nrDetinatori != NULL)
+		cout << "numita " << nume << " a fost observata anul acesta de " << nrObservatii << endl;
+		cout << "ori si are o greutate de " << greutate << " mii de tone " << endl;
+		cout << "si un numar de " << nrSateliti << " sateliti, numiti: " << endl;
+
+		if (nrSateliti != NULL)
 		{
-			for (int i = 0; i < nrDetinatori; i++)
+			for (int i = 0; i < nrSateliti; i++)
 			{
-				cout << "-detinator anterior: " << detinatori[i] << " " << endl;
+				cout << "->" << sateliti[i] << endl;
 			}
 		}
 		else
 		{
-			cout << "0 detinatori anteriori" << endl;
+			cout << "nu au fost identificati sateliti" << endl;
 		}
+
+		cout << endl;
 	}
 };
 
-int Autoturism::nrMasini = 10;
+int Planeta::locSistem= 0;
+
+class Constelatie
+{
+public:
+	static int nrObservatie;
+	const int nrObservatii;
+	string nume;
+	float nrStele;
+	int nrNebuloase;
+	string* nebuloase;
+
+	Constelatie(string nume) : nrObservatii(4)
+	{
+		nrObservatie++;
+		this->nume = nume;
+		this->nrStele = 7;
+		this->nrNebuloase = 0;
+		this->nebuloase = NULL;
+	}
+
+	Constelatie(string nume, float nrStele) : nrObservatii(4)
+	{
+		nrObservatie++;
+		this->nume = nume;
+		this->nrStele = nrStele;
+		this->nrNebuloase = 0;
+		this->nebuloase = NULL;
+	}
+
+	Constelatie(string nume, float nrStele, int nrNebuloase, string* nebuloase) : nrObservatii(4)
+	{
+		nrObservatie++;
+		this->nume = nume;
+		this->nrStele = nrStele;
+		this->nrNebuloase = nrNebuloase;
+		this->nebuloase = new string[nrNebuloase];
+		for (int i = 0; i < nrNebuloase; i++)
+		{
+			this->nebuloase[i] = nebuloase[i];
+		}
+	}
+
+	~Constelatie()
+	{
+		if (this->nebuloase != NULL)
+		{
+			delete[]this->nebuloase;
+		}
+	}
+
+	void afisareStaticaConstelatie()
+	{
+		cout << "A " << nrObservatie << "-a constelatie observata" << endl;
+	}
+
+	void afisareConstelatie()
+	{
+		cout << "cu denumirea de " << nume << " si un numar de " << nrStele << " stele" << endl; 
+		cout << "a fost observata anul acesta de " << nrObservatii << " ori si are un numar de " << endl;
+		cout << nrNebuloase << " nebuloase, numite: " << endl;
+
+		if (nrNebuloase != NULL)
+		{
+			for (int i = 0; i < nrNebuloase; i++)
+			{
+				cout << "->" << nebuloase[i] << endl;
+			}
+		}
+		else
+		{
+			cout << "nu am putut identifica nebuloase pentru aceasta constelatie" << endl;
+		}
+
+		cout << endl;
+	}
+};
+
+int Constelatie::nrObservatie = 20;
+
+class Galaxie
+{
+public:
+	static int nrObservatie;
+	const int nrObservatii;
+	string nume;
+	int nrObiecte;
+	float lungime;
+	bool spirala;
+	int nrBrate;
+	string* brate;
+
+	Galaxie(string nume) : nrObservatii(3)
+	{
+		nrObservatie++;
+		this->nume = nume;
+		this->lungime = 14000;
+		this->nrObiecte = 30000;
+		this->spirala = true;
+		this->nrBrate = 0;
+		this->brate = NULL;
+	}
+
+	Galaxie(string nume, int lungime, int nrObiecte) : nrObservatii(3)
+	{
+		nrObservatie++;
+		this->nume= nume;
+		this->lungime = lungime;
+		this->nrObiecte = nrObiecte;
+		this->spirala = false;
+		this->nrBrate = 0;
+		this->brate = NULL;
+	}
+
+	Galaxie(string nume, int nrBrate, string* brate) : nrObservatii(3)
+	{
+		nrObservatie++;
+		this->nume = nume;
+		this->lungime = 120000;
+		this->nrObiecte = 500000;
+		this->spirala = true;
+		this->nrBrate = nrBrate;
+		this->brate = new string[nrBrate];
+		for (int i = 0; i < nrBrate; i++)
+		{
+			this->brate[i] = brate[i];
+		}
+	}
+
+	~Galaxie()
+	{
+		if (this->brate != NULL)
+		{
+			delete[]this->brate;
+		}
+	}
+
+	void afisareStaticaGalaxie()
+	{
+		cout << "A " << nrObservatie << "-a galaxie observata anul acesta " << endl;
+	}
+
+	void afisareGalaxie()
+	{
+		cout << "poarta numele de " << nume << ", " << endl;
+		cout << "se extinde pe o lungime de " << endl;
+		cout << lungime << " ani lumina, continand in total " << nrObiecte << endl;
+		cout << "miliarde de obiecte, incapsulate in brate " << endl;
+		cout << (spirala ? "sub forma de spirala" : "fara forma de spirala") << ", dintre care principale: " << endl;
+
+		if (nrBrate != NULL)
+		{
+			for (int i = 0; i < nrBrate; i++)
+			{
+				cout << "->" << brate[i] << endl;
+			}
+		}
+		else
+		{
+			cout << "nu am putut identifica bratele cautate" << endl;
+		}
+
+		cout << "si a fost observata de " << nrObservatii << " ori " << endl;
+
+		cout << endl;
+	}
+};
+
+int Galaxie::nrObservatie = 10;
 
 void main()
 {
-	Palarie palarie1(47.9);
-	palarie1.afisareStaticaPalarii();
-	palarie1.afisarePalarii();
 
-	Palarie palarie2("Maddame Paris", 34.7);
-	palarie2.afisareStaticaPalarii();
-	palarie2.afisarePalarii();
+	cout << BLUE << "PREZENTARE OBSERVATII ASTRONOMICE 2023" << RESET << endl;
+	cout << " " << endl;
+	cout << " " << endl;
 
-	string* culorip = new string[3];
-	culorip[0] = "rosu";
-	culorip[1] = "albastru";
-	culorip[2] = "verde";
+	Planeta p1(6000);
+	p1.afisareStaticaPlaneta();
+	p1.afisarePlaneta();
 
-	Palarie palarie3("Milan", 34.5, 3, culorip);
-	palarie3.afisareStaticaPalarii();
-	palarie3.afisarePalarii();
+	Planeta p2("Venus", 34000);
+	p2.afisareStaticaPlaneta();
+	p2.afisarePlaneta();
 
-	string* culori = new string[5];
-	culori[0] = "rosu";
-	culori[1] = "verde";
-	culori[2] = "albastru";
-	culori[3] = "negru";
-	culori[4] = "violet";
+	string* satelitip = new string[1];
+	satelitip[0] = "Luna";
 
-	Pix pix1(8.9);
-	pix1.afisareStaticaPixuri();
-	pix1.afisarePixuri();
+	Planeta p3("Pamant", 27000, 1, satelitip);
+	p3.afisareStaticaPlaneta();
+	p3.afisarePlaneta();
 
-	Pix pix2("BIC", 0.8);
-	pix2.afisareStaticaPixuri();
-	pix2.afisarePixuri();
+	string* nebuloase = new string[1];
+	nebuloase[0] = "Nebuloasa Orion";
 
-	Pix pix3("BIC", 2.3, 5, culori);
-	pix3.afisareStaticaPixuri();
-	pix3.afisarePixuri();
+	Constelatie c1("Carul Mare");
+	c1.afisareStaticaConstelatie();
+	c1.afisareConstelatie();
 
-	string* detinatori = new string[2];
-	detinatori[0] = "Marian";
-	detinatori[1] = "Iulian";
+	Constelatie c2("Lebada", 93);
+	c2.afisareStaticaConstelatie();
+	c2.afisareConstelatie ();
 
-	Autoturism autoturism1(2,detinatori);
-	autoturism1.afisareStaticaAutoturisme();
-	autoturism1.afisareAutoturisme();
+	Constelatie c3("Orion", 6, 1, nebuloase);
+	c3.afisareStaticaConstelatie();
+	c3.afisareConstelatie();
 
-	Autoturism autoturism2(12, 120, "Ferrari");
-	autoturism2.afisareStaticaAutoturisme();
-	autoturism2.afisareAutoturisme();
+	string* brate = new string[2];
+	brate[0] = "Scutul-Crucea";
+	brate[1] = "Carena-Sagetator";
 
-	Autoturism autoturism3(130);
-	autoturism3.afisareStaticaAutoturisme();
-	autoturism3.afisareAutoturisme();
+	Galaxie g1("Calea Lactee", 2, brate);
+	g1.afisareStaticaGalaxie();
+	g1.afisareGalaxie();
+
+
+	Galaxie g2("Andromeda", 12000, 300000);
+	g2.afisareStaticaGalaxie();
+	g2.afisareGalaxie();
+
+	Galaxie g3("Galaxia Artificiilor");
+	g3.afisareStaticaGalaxie();
+	g3.afisareGalaxie();
 
 
 }
