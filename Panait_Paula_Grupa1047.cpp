@@ -96,7 +96,7 @@ public:
         this->nrSateliti = nrSateliti;
     }
 
-    string* getSateliti() const 
+    string* getSateliti() const
     {
         return sateliti;
     }
@@ -460,12 +460,6 @@ void prelucrareAstronomica2(const Constelatie& constelatie)
     cout << " " << endl;
 }
 
-void prelucrareAstronomica3(const Galaxie& galaxie)
-{
-    cout << GREEN << "Prelucrare 3 cu galaxia " << galaxie.nume << RESET << endl;
-    cout << " " << endl;
-}
-
 void main()
 {
     cout << BLUE << "PREZENTARE OBSERVATII ASTRONOMICE 2023" << RESET << endl;
@@ -537,6 +531,12 @@ void main()
     cout << "Nume planeta dupa modificare: " << planeta1.getNume() << endl;
     cout << "Greutate dupa modificare: " << planeta1.getGreutate() << endl;
     cout << "Numar sateliti dupa modificare: " << planeta1.getNrSateliti() << endl;
+    cout << "Nume sateliti dupa modificare: " << endl;
+    string* numeSateliti = planeta1.getSateliti();
+    for (int i = 0; i < planeta1.getNrSateliti(); ++i)
+    {
+        cout << numeSateliti[i] << endl;
+    }
     cout << " " << endl;
 
     prelucrareAstronomica2(c2);
@@ -551,37 +551,20 @@ void main()
     constelatie1.setNrStele(100);
     constelatie1.setNrNebuloase(5);
     string* nebuloaseNoi = new string[2];
-    nebuloaseNoi[0] = "Nebuloasa Veil";
-    nebuloaseNoi[1] = "Nebuloasa North America";
+    nebuloaseNoi[0] = "Nebuloasa 'Veil'";
+    nebuloaseNoi[1] = "Nebuloasa 'North America'";
     constelatie1.setNebuloase(2, nebuloaseNoi);
 
     cout << "Nume constelatie dupa modificare: " << constelatie1.getNume() << endl;
     cout << "Numar stele dupa modificare: " << constelatie1.getNrStele() << endl;
     cout << "Numar nebuloase dupa modificare: " << constelatie1.getNrNebuloase() << endl;
+    cout << "Nume nebuloase dupa modificare:  " << endl;
+    string* numeNebuloase = constelatie1.getNebuloase();
+    for (int i = 0; i < constelatie1.getNrNebuloase(); ++i)
+    {
+        cout << numeNebuloase[i] << endl;
+    }
+
     cout << " " << endl;
 
-    prelucrareAstronomica3(g3);
-
-    Galaxie galaxie1("Calea Lactee");
-    cout << "Nume galaxie: " << galaxie1.getNume() << endl;
-    cout << "Numar obiecte: " << galaxie1.getNrObiecte() << endl;
-    cout << "Lungime: " << galaxie1.getLungime() << endl;
-    cout << "Numar brate: " << galaxie1.getNrBrate() << endl;
-    cout << " " << endl;
-
-    galaxie1.setNume();
-    galaxie1.setNrObiecte(40000);
-    galaxie1.setLungime(15000);
-    galaxie1.setNrBrate(3);
-    string* brateNoi = new string[3];
-    brateNoi[0] = "Brat1";
-    brateNoi[1] = "Brat2";
-    brateNoi[2] = "Brat3";
-    galaxie1.setBrate(3, brateNoi);
-
-    cout << "Nume galaxie dupa modificare: " << galaxie1.getNume() << endl;
-    cout << "Numar obiecte dupa modificare: " << galaxie1.getNrObiecte() << endl;
-    cout << "Lungime dupa modificare: " << galaxie1.getLungime() << endl;
-    cout << "Numar brate dupa modificare: " << galaxie1.getNrBrate() << endl;
-    cout << " " << endl;
 }
