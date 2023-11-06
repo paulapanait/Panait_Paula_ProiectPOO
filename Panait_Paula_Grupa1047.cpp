@@ -4,6 +4,7 @@ using namespace std;
 
 #define BLUE "\033[34m"
 #define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
 #define RESET "\033[0m"
 
 class Planeta
@@ -111,6 +112,100 @@ public:
         {
             this->sateliti[i] = sateliti[i];
         }
+    }
+
+    Planeta operator=(const Planeta& p)
+    {
+        if (this != &p)
+        {
+            this->nume = p.nume;
+            this->greutate = p.greutate;
+            this->nrSateliti = p.nrSateliti;
+            this->sateliti = p.sateliti;
+            if (this->nrSateliti != NULL)
+            {
+                delete[]this->sateliti;
+            }
+            for (int i = 0; i < p.nrSateliti; i++)
+            {
+                this->sateliti[i] = p.sateliti[i];
+            }
+        }
+        return *this;
+    }
+
+    Planeta operator+(const Planeta& p)
+        const {
+        Planeta aux = *this;
+        aux.nume = this->nume + " si " + p.nume;
+        aux.greutate = this->greutate + p.greutate;
+        aux.nrSateliti = this->nrSateliti + p.nrSateliti;
+        if (aux.sateliti != NULL)
+        {
+            delete[]aux.sateliti;
+        }
+        aux.sateliti = new string[nrSateliti];
+        for (int i = 0; i < nrSateliti; i++)
+        {
+            aux.sateliti[i] = this->sateliti[i];
+        }
+        for (int i = this->nrSateliti; i < aux.nrSateliti; i++)
+        {
+            aux.sateliti[i] = p.sateliti[i - this->nrSateliti];
+        }
+
+        return aux;
+    }
+
+    Planeta operator*(const Planeta& p)
+    {
+        Planeta aux = *this;
+        aux.nume = this->nume + " si " + p.nume;
+        aux.greutate = this->greutate * p.greutate;
+        aux.nrSateliti = this->nrSateliti * p.nrSateliti;
+        if (aux.sateliti != NULL)
+        {
+            delete[]aux.sateliti;
+        }
+        aux.sateliti = new string[nrSateliti];
+        for (int i = 0; i < nrSateliti; i++)
+        {
+            aux.sateliti[i] = this->sateliti[i];
+        }
+        for (int i = this->nrSateliti; i < aux.nrSateliti; i++)
+        {
+            aux.sateliti[i] = p.sateliti[i - this->nrSateliti];
+        }
+
+        return aux;
+    }
+
+    Planeta operator/(const Planeta& p)
+    {
+        Planeta aux = *this;
+        aux.nume = this->nume + " si " + p.nume;
+        aux.greutate = this->greutate / p.greutate;
+        aux.nrSateliti = this->nrSateliti / p.nrSateliti;
+        if (aux.sateliti != NULL)
+        {
+            delete[]aux.sateliti;
+        }
+        aux.sateliti = new string[nrSateliti];
+        for (int i = 0; i < nrSateliti; i++)
+        {
+            aux.sateliti[i] = this->sateliti[i];
+        }
+        for (int i = this->nrSateliti; i < aux.nrSateliti; i++)
+        {
+            aux.sateliti[i] = p.sateliti[i - this->nrSateliti];
+        }
+
+        return aux;
+    }
+
+    friend int afisareGreutate(const Planeta& p)
+    {
+        return p.greutate;
     }
 
     void afisareStaticaPlaneta()
@@ -247,6 +342,59 @@ public:
         {
             this->nebuloase[i] = nebuloase[i];
         }
+    }
+
+    Constelatie operator=(const Constelatie& c)
+    {
+        if (this != &c)
+        {
+            this->nume = c.nume;
+            this->nrStele = c.nrStele;
+            this->nrNebuloase = c.nrNebuloase;
+            this->nebuloase = c.nebuloase;
+            if (this->nrNebuloase != NULL)
+            {
+                delete[]this->nebuloase;
+            }
+            for (int i = 0; i < c.nrNebuloase; i++)
+            {
+                this->nebuloase[i] = c.nebuloase[i];
+            }
+        }
+        return *this;
+    }
+
+    Constelatie operator-(const Constelatie& c)
+    {
+        Constelatie aux = *this;
+        aux.nume = this->nume + " si " + c.nume;
+        aux.nrStele = this->nrStele - c.nrStele;
+        aux.nrNebuloase = this->nrNebuloase - c.nrNebuloase;
+        if (aux.nebuloase != NULL)
+        {
+            delete[]aux.nebuloase;
+        }
+        aux.nebuloase = new string[nrNebuloase];
+        for (int i = 0; i < nrNebuloase; i++)
+        {
+            aux.nebuloase[i] = this->nebuloase[i];
+        }
+        for (int i = this->nrNebuloase; i < aux.nrNebuloase; i++)
+        {
+            aux.nebuloase[i] = c.nebuloase[i - this->nrNebuloase];
+        }
+
+        return aux;
+    }
+
+    bool operator<(Constelatie c)
+    {
+        return this->nrStele < c.nrStele;
+    }
+
+    bool operator!=(Constelatie c)
+    {
+        return this->nrNebuloase != c.nrNebuloase;
     }
 
     void afisareStaticaConstelatie()
@@ -415,6 +563,49 @@ public:
         }
     }
 
+    Galaxie operator=(const Galaxie& g)
+    {
+        if (this != &g)
+        {
+            this->nume = g.nume;
+            this->lungime = g.lungime;
+            this->nrObiecte = g.nrObiecte;
+            this->spirala = g.spirala;
+            this->nrBrate = g.nrBrate;
+            if (this->nrBrate != NULL)
+            {
+                delete[]this->brate;
+            }
+            this->brate = new string[g.nrBrate];
+            for (int i = 0; i < g.nrBrate; i++)
+            {
+                this->brate[i] = g.brate[i];
+            }
+        }
+        return *this;
+    }
+
+    bool operator<=(Galaxie g)
+    {
+        return this->lungime < g.lungime;
+    }
+      
+    friend ostream& operator<<(ostream& galaxie, const Galaxie& g) {
+        galaxie << "Nume: " << g.nume << endl;
+        galaxie << "Lungime: " << g.lungime << endl;
+        galaxie << "mii de ani lumina" << endl;
+        return galaxie;
+    }
+
+    friend istream& operator>>(istream& galaxie, Galaxie& g) {
+        cout << "Nume: ";
+        galaxie >> g.nume;
+        cout << "Lungime: ";
+        galaxie >> g.lungime;
+        cout << "mii de ani lumina " << endl;
+        return galaxie;
+    }
+
     void afisareStaticaGalaxie()
     {
         cout << "A " << nrObservatie << "-a galaxie observata anul acesta " << endl;
@@ -567,4 +758,87 @@ void main()
 
     cout << " " << endl;
 
+    Planeta p5 = p1;
+    cout << "Planeta 5 este o copie a planetei 1: " << endl;
+    p5.afisareStaticaPlaneta();
+    p5.afisarePlaneta();
+    cout << endl;
+
+    cout << GREEN << "OPERATORI: " << RESET << endl;
+    cout << " " << endl;
+    cout << " " << endl;
+    cout << YELLOW << "Operatorul '=' pentru clasa 'Planeta': " << RESET << endl;
+    cout << " " << endl;
+    Planeta p6(8000);
+    p6 = p1;
+    p6.afisareStaticaPlaneta();
+    p6.afisarePlaneta();
+    cout << " " << endl;
+    cout << YELLOW << "Operatorul '+' pentru clasa 'Planeta': " << RESET << endl;
+    Planeta p7 = p1 + p2;
+    p7.afisareStaticaPlaneta();
+    p7.afisarePlaneta();
+    cout << " " << endl;
+    cout << YELLOW << "Operatorul '*' pentru clasa 'Planeta': " << RESET << endl;
+    Planeta p8 = p1 * p2;
+    p8.afisareStaticaPlaneta();
+    p8.afisarePlaneta();
+    cout << " " << endl;
+    cout << YELLOW << "Operatorul '/' pentru clasa 'Planeta': " << RESET << endl;
+    Planeta p9 = p2 / p3;
+    p9.afisareStaticaPlaneta();
+    p9.afisarePlaneta();
+    cout << " " << endl;
+    cout << YELLOW << "Operatorul '=' pentru clasa 'Constelatie': " << RESET << endl;
+    cout << " " << endl;
+    Constelatie c6("Scorpio");
+    c6 = c1;
+    c6.afisareStaticaConstelatie();
+    c6.afisareConstelatie();
+    cout << " " << endl;
+    cout << YELLOW << "Operatorul '-' pentru clasa 'Constelatie': " << RESET << endl;
+    cout << " " << endl;
+    Constelatie c7=c1-c2;
+    c7.afisareStaticaConstelatie();
+    c7.afisareConstelatie();
+    cout << " " << endl;
+    cout << YELLOW << "Operatorul '<' pentru clasa 'Constelatie': " << RESET << endl;
+    cout << " " << endl;
+    bool c8 = c1 < c2;
+    cout << (c8 ? "Constelatia 1 are un numar mai mare de stele decat constelatia 2" : "Constelatia 1 are un numar mai mic de stele decat constelatia 2") << endl;
+    cout << " " << endl;
+    cout << " " << endl;
+    cout << YELLOW << "Operatorul '!=' pentru clasa 'Constelatie': " << RESET << endl;
+    cout << " " << endl;
+    bool c9 = c1 != c2;
+    cout << (c9 ? "Constelatia 1 are un numar diferit de nebuloase fata de constelatia 2" : "Constelatia 1 are acelasi numar de nebuloase precum constelatia 2") << endl;
+    cout << " " << endl;
+    cout << " " << endl;
+    cout << YELLOW << "Operatorul '=' pentru clasa 'Galaxie': " << RESET << endl;
+    cout << " " << endl;
+    Galaxie g6("Compasul");
+    g6 = g1;
+    g6.afisareStaticaGalaxie();
+    g6.afisareGalaxie();
+    cout << " " << endl;
+    cout << YELLOW << "Operatorul '<=' pentru clasa 'Galaxie': " << RESET << endl;
+    cout << " " << endl;
+    bool g7 = g1 <= g2;
+    cout << (g7 ? "Galaxia 1 are o lungime mai mica sau egala cu lungimea galaxiei 2." : "Galaxia 1 are o lungime mai mare strict decat lungimea galaxiei 2.");
+    cout << " " << endl;
+    cout << " " << endl;
+    cout << YELLOW << "Operatorul '<<' pentru clasa 'Galaxie': " << RESET << endl;
+    cout << " " << endl;
+    Galaxie g8("Fluturelui");
+    cout << g8;
+    cout << " " << endl;
+    cout << YELLOW << "Operatorul '>>' pentru clasa 'Galaxie': " << RESET << endl;
+    cout << " " << endl;
+    Galaxie g9("Fluturelui");
+    cin >> g9;
+    cout << " " << endl;
+    cout << GREEN << "Functia friend: " << RESET << endl;
+    cout << "Afisare greutate p1: ";
+    cout << afisareGreutate(p1);
+    cout << " " << endl;
 }
