@@ -19,6 +19,15 @@ public:
     const int nrObservatii;
     string nume;
 
+    Planeta() : nume(" "), nrSateliti(0), sateliti(NULL), nrObservatii(12)
+    {
+        locSistem++;
+        this->nume = nume;
+        this->greutate = greutate;
+        this->nrSateliti = nrSateliti;
+        this->sateliti = sateliti;
+    }
+
     Planeta(float greutate) : greutate(greutate), nrObservatii(12)
     {
         locSistem++;
@@ -92,7 +101,7 @@ public:
         return nrSateliti;
     }
 
-    void setNrSateliti(int nrSateliti) 
+    void setNrSateliti(int nrSateliti)
     {
         this->nrSateliti = nrSateliti;
     }
@@ -203,6 +212,53 @@ public:
         return aux;
     }
 
+    friend ostream& operator<<(ostream& planeta, const Planeta& p)
+    {
+        planeta << "Nume: " << p.nume << endl;
+        planeta << "Greutate: " << p.greutate << endl;
+        planeta << "Numar sateliti: " << p.nrSateliti << endl;
+        string sateliti = " ";
+        planeta << "Nume sateliti: ";
+        for (int i = 0; i < p.nrSateliti; i++)
+        {
+            planeta << p.sateliti[i] << " ";
+        }
+        cout << endl;
+        return planeta;
+    }
+
+    friend istream& operator>>(istream& planeta, Planeta& p)
+    {
+        cout << "Nume: ";
+        planeta >> p.nume;
+        cout << endl;
+        cout << "Greutate: ";
+        planeta >> p.greutate;
+        cout << endl;
+        cout << "Numar sateliti: ";
+        planeta >> p.nrSateliti;
+        cout << endl;
+        p.sateliti = new string[p.nrSateliti];
+        cout << "Nume satelit: " << endl;
+        for (int i = 0; i < p.nrSateliti; i++)
+        {
+            cout << "Satelitul " << i + 1 << ": " << endl;
+            planeta >> p.sateliti[i];
+            cout << endl;
+        }
+        cout << endl;
+        return planeta;
+    }
+
+    const string& operator[](int index)
+    {
+        if (index < 0 && index >= nrSateliti)
+        {
+            throw out_of_range("Index invalid pentru sateliti");
+        }
+        return sateliti[index];
+    }
+
     friend int afisareGreutate(const Planeta& p)
     {
         return p.greutate;
@@ -248,6 +304,15 @@ private:
 public:
     const int nrObservatii;
     string nume;
+
+    Constelatie() : nume(" "), nrStele(0), nrNebuloase(0), nebuloase(NULL), nrObservatii(12)
+    {
+        nrObservatie++;
+        this->nume = nume;
+        this->nrStele = nrStele;
+        this->nrNebuloase = 0;
+        this->nebuloase = NULL;
+    }
 
     Constelatie(string nume) : nrObservatii(4)
     {
@@ -312,17 +377,17 @@ public:
     {
         return nrStele;
     }
-    
+
     void setNrStele(float nrStele)
     {
         this->nrStele = nrStele;
     }
 
     int getNrNebuloase() const
-    { 
+    {
         return nrNebuloase;
     }
-    
+
     void setNrNebuloase(int nrNebuloase)
     {
         this->nrNebuloase = nrNebuloase;
@@ -397,6 +462,53 @@ public:
         return this->nrNebuloase != c.nrNebuloase;
     }
 
+    friend ostream& operator<<(ostream& constelatie, const Constelatie& c)
+    {
+        constelatie << "Nume: " << c.nume << endl;
+        constelatie << "Numar stele: " << c.nrStele << endl;
+        constelatie << "Numar nebuloase: " << c.nrNebuloase << endl;
+        string nebuloase = " ";
+        constelatie << "Nume nebuloase: " << endl;
+        for (int i = 0; i < c.nrNebuloase; i++)
+        {
+            constelatie << c.nebuloase[i] << " ";
+            cout << endl;
+        }
+        cout << endl;
+        return constelatie;
+    }
+
+    friend istream& operator>>(istream& constelatie, Constelatie& c)
+    {
+        cout << "Nume: ";
+        constelatie >> c.nume;
+        cout << endl;
+        cout << "Numar stele: ";
+        constelatie >> c.nrStele;
+        cout << endl;
+        cout << "Numar nebuloase: ";
+        constelatie >> c.nrNebuloase;
+        cout << endl;
+        c.nebuloase = new string[c.nrNebuloase];
+        cout << "Nume nebuloase: " << endl;
+        for (int i = 0; i < c.nrNebuloase; i++) {
+            cout << "Nebuloasa " << i + 1 << " " << endl;
+            constelatie >> c.nebuloase[i];
+            cout << endl;
+        }
+        cout << endl;
+        return constelatie;
+    }
+
+   const string& operator[](int index)
+    {
+        if (index < 0 && index >= nrNebuloase)
+        {
+            throw out_of_range("Index invalid pentru nebuloase");
+        }
+        return nebuloase[index];
+    }
+
     void afisareStaticaConstelatie()
     {
         cout << "A " << nrObservatie << "-a constelatie observata" << endl;
@@ -439,6 +551,17 @@ private:
 public:
     const int nrObservatii;
     string nume;
+
+    Galaxie() : nume(" "), nrObiecte(0), lungime(0), spirala(0), nrBrate(0), brate(NULL), nrObservatii(12)
+    {
+        nrObservatie++;
+        this->nume = nume;
+        this->nrObiecte = nrObiecte;
+        this->lungime = lungime;
+        this->nrBrate = nrBrate;
+        this->brate = brate;
+        this->spirala = spirala;
+    }
 
     Galaxie(string nume) : nrObservatii(3)
     {
@@ -509,7 +632,7 @@ public:
 
     int getNrObiecte() const
     {
-        return nrObiecte; 
+        return nrObiecte;
     }
 
     void setNrObiecte(int nrObiecte)
@@ -589,21 +712,48 @@ public:
     {
         return this->lungime < g.lungime;
     }
-      
+
     friend ostream& operator<<(ostream& galaxie, const Galaxie& g) {
         galaxie << "Nume: " << g.nume << endl;
         galaxie << "Lungime: " << g.lungime << endl;
-        galaxie << "mii de ani lumina" << endl;
+        galaxie << "Numar brate: " << g.nrBrate << endl;
+        string brate = " ";
+        galaxie << "Nume brate: " << endl;
+        for (int i = 0; i < g.nrBrate; i++)
+        {
+            galaxie << g.brate[i] << " ";
+            cout << endl;
+        }
+        cout << endl;
         return galaxie;
     }
 
     friend istream& operator>>(istream& galaxie, Galaxie& g) {
         cout << "Nume: ";
         galaxie >> g.nume;
+        cout << endl;
         cout << "Lungime: ";
         galaxie >> g.lungime;
-        cout << "mii de ani lumina " << endl;
+        cout << endl;
+        g.brate = new string[g.nrBrate];
+        cout << "Nume brate: " << endl;
+        for (int i = 0; i < g.nrBrate; i++)
+        {
+            cout << "Bratul " << i + 1 << ": " << endl;
+            galaxie >> g.brate[i];
+            cout << endl;
+        }
+        cout << endl;
         return galaxie;
+    }
+
+    const string& operator[](int index) const
+    {
+        if (index < 0 && index >= nrBrate)
+        {
+            throw out_of_range("Index invalid pentru brate");
+        }
+        return brate[index];
     }
 
     void afisareStaticaGalaxie()
@@ -650,6 +800,17 @@ void prelucrareAstronomica2(const Constelatie& constelatie)
     cout << GREEN << "Prelucrare 2 cu constelatia " << constelatie.nume << RESET << endl;
     cout << " " << endl;
 }
+
+void citesteMatrice(int matrice[][100], int nrLinii, int nrColoane) {
+    cout << "Introduceti elementele matricei: " << endl;
+    for (int i = 0; i < nrLinii; ++i) {
+        for (int j = 0; j < nrColoane; ++j) {
+            cout << "Elementul [" << i << "][" << j << "]: ";
+            cin >> matrice[i][j];
+        }
+    }
+}
+
 
 void main()
 {
@@ -798,7 +959,7 @@ void main()
     cout << " " << endl;
     cout << YELLOW << "Operatorul '-' pentru clasa 'Constelatie': " << RESET << endl;
     cout << " " << endl;
-    Constelatie c7=c1-c2;
+    Constelatie c7 = c1 - c2;
     c7.afisareStaticaConstelatie();
     c7.afisareConstelatie();
     cout << " " << endl;
@@ -837,8 +998,97 @@ void main()
     Galaxie g9("Fluturelui");
     cin >> g9;
     cout << " " << endl;
+    cout << " " << endl;
     cout << GREEN << "Functia friend: " << RESET << endl;
+    cout << " " << endl;
     cout << "Afisare greutate p1: ";
     cout << afisareGreutate(p1);
     cout << " " << endl;
+    cout << " " << endl;
+    cout << GREEN << "Vectorul: " << RESET << endl;
+    cout << " " << endl;
+    int n;
+    cout << "Introduceti numarul de planete: ";
+    cin >> n;
+
+    Planeta* vectorPlanete = new Planeta[n];
+    for (int i = 0; i < n; i++)
+    {
+        cout << "Introduceti detaliile pentru planeta " << i + 1 << ":" << endl;
+        cin >> vectorPlanete[i];
+    }
+
+    cout << "Introduceti numarul de constelatii: ";
+    cin >> n;
+
+    Constelatie* vectorConstelatii = new Constelatie[n];
+    for (int i = 0; i < n; i++)
+    {
+        cout << "Introduceti detaliile pentru constelatia " << i + 1 << ":" << endl;
+        cin >> vectorConstelatii[i];
+    }
+
+    cout << "Introduceti numarul de galaxii: ";
+    cin >> n;
+
+    Galaxie* vectorGalaxii = new Galaxie[n];
+    for (int i = 0; i < n; i++)
+    {
+        cout << "Introduceti detaliile pentru galaxia " << i + 1 << ":" << endl;
+        cin >> vectorGalaxii[i];
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << "Planeta " << i + 1 << ":" << endl;
+        cout << vectorPlanete[i];
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << "Constelatia " << i + 1 << ":" << endl;
+        cout << vectorConstelatii[i];
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << "Galaxia " << i + 1 << ":" << endl;
+        cout << vectorGalaxii[i];
+    }
+
+    //cout << GREEN << "Matricea: " << RESET << endl;
+    //cout << " " << endl;
+
+    //int lin;
+    //int col;
+
+    //cout << "Introduceti numarul de linii si coloane pentru matricea de planete: ";
+    //cin >> lin >> col;
+
+    //Planeta** matricePlanete = new Planeta * [lin];
+    //for (int i = 0; i < lin; i++)
+    //{
+    //    matricePlanete[i] = new Planeta[col];
+    //    for (int j = 0; j < col; j++)
+    //    {
+    //        cout << "Introduceti detaliile pentru planeta de la pozitia [" << i + 1 << "][" << j + 1 << "]:" << endl;
+    //        cin >> matricePlanete[i][j];
+    //    }
+    //}
+
+    //for (int i = 0; i < lin; i++)
+    //{
+    //    for (int j = 0; j < col; j++)
+    //    {
+    //        cout << "Planeta [" << i + 1 << "][" << j + 1 << "]:" << endl;
+    //        cout << matricePlanete[i][j];
+    //    }
+    //}
+
+    //for (int i = 0; i < lin; i++) {
+    //    delete[] matricePlanete[i];
+    //}
+    //delete[] matricePlanete;
+
+    //citesteMatrice(matricePlanete, lin, col);
 }
