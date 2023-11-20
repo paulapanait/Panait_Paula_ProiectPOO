@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include<vector>
+#include <vector>
 using namespace std;
 
 #define BLUE "\033[34m"
@@ -52,6 +52,10 @@ public:
         this->nume = nume;
         this->greutate = greutate;
         this->nrSateliti = nrSateliti;
+        if (this->sateliti != NULL)
+        {
+            delete[]this->sateliti;
+        }
         this->sateliti = new string[nrSateliti];
         for (int i = 0; i < nrSateliti; i++)
         {
@@ -65,6 +69,10 @@ public:
         this->nume = nou.nume;
         this->greutate = nou.greutate;
         this->nrSateliti = nou.nrSateliti;
+        if (this->sateliti != NULL)
+        {
+            delete[]this->sateliti;
+        }
         this->sateliti = new string[nrSateliti];
         for (int i = 0; i < nrSateliti; i++)
         {
@@ -74,7 +82,10 @@ public:
 
     ~Planeta()
     {
-        delete[] this->sateliti;
+        if (this->sateliti != NULL)
+        {
+            delete[]this->sateliti;
+        }
     }
 
     string getNume() const
@@ -115,7 +126,10 @@ public:
     void setSateliti(int nrSateliti, string* sateliti)
 
     {
-        delete[] this->sateliti;
+        if (this->sateliti != NULL)
+        {
+            delete[]this->sateliti;
+        }
         this->nrSateliti = nrSateliti;
         this->sateliti = new string[nrSateliti];
         for (int i = 0; i < nrSateliti; i++)
@@ -132,7 +146,7 @@ public:
             this->greutate = p.greutate;
             this->nrSateliti = p.nrSateliti;
             this->sateliti = p.sateliti;
-            if (this->nrSateliti != NULL)
+            if (this->sateliti != NULL)
             {
                 delete[]this->sateliti;
             }
@@ -339,6 +353,10 @@ public:
         this->nume = nume;
         this->nrStele = nrStele;
         this->nrNebuloase = nrNebuloase;
+        if (this->nebuloase != NULL)
+        {
+            delete[]this->nebuloase;
+        }
         this->nebuloase = new string[nrNebuloase];
         for (int i = 0; i < nrNebuloase; i++)
         {
@@ -352,6 +370,10 @@ public:
         this->nume = nou.nume;
         this->nrStele = nou.nrStele;
         this->nrNebuloase = nou.nrNebuloase;
+        if (this->nebuloase != NULL)
+        {
+            delete[]this->nebuloase;
+        }
         this->nebuloase = new string[nrNebuloase];
         for (int i = 0; i < nrNebuloase; i++)
         {
@@ -361,7 +383,10 @@ public:
 
     ~Constelatie()
     {
-        delete[] nebuloase;
+        if(this->nebuloase!=NULL)
+        {
+            delete[]this->nebuloase;
+        }
     }
 
     string getNume() const
@@ -401,7 +426,10 @@ public:
 
     void setNebuloase(int nrNebuloase, string* nebuloase)
     {
-        delete[] this->nebuloase;
+        if (this->nebuloase != NULL)
+        {
+            delete[]this->nebuloase;
+        }
         this->nrNebuloase = nrNebuloase;
         this->nebuloase = new string[nrNebuloase];
         for (int i = 0; i < nrNebuloase; i++)
@@ -417,11 +445,11 @@ public:
             this->nume = c.nume;
             this->nrStele = c.nrStele;
             this->nrNebuloase = c.nrNebuloase;
-            this->nebuloase = c.nebuloase;
             if (this->nrNebuloase != NULL)
             {
                 delete[]this->nebuloase;
             }
+            this->nebuloase = new string[c.nrNebuloase];
             for (int i = 0; i < c.nrNebuloase; i++)
             {
                 this->nebuloase[i] = c.nebuloase[i];
@@ -594,6 +622,10 @@ public:
         this->nrObiecte = 500000;
         this->spirala = true;
         this->nrBrate = nrBrate;
+        if (this->brate != NULL)
+        {
+            delete[]this->brate;
+        }
         this->brate = new string[nrBrate];
         for (int i = 0; i < nrBrate; i++)
         {
@@ -609,6 +641,10 @@ public:
         this->nrObiecte = nou.nrObiecte;
         this->spirala = nou.spirala;
         this->nrBrate = nou.nrBrate;
+        if (this->brate != NULL)
+        {
+            delete[]this->brate;
+        }
         this->brate = new string[nrBrate];
         for (int i = 0; i < nrBrate; i++)
         {
@@ -618,7 +654,10 @@ public:
 
     ~Galaxie()
     {
-        delete[] brate;
+        if (this->brate != NULL)
+        {
+            delete[]this->brate;
+        }
     }
 
     string getNume() const
@@ -678,7 +717,10 @@ public:
 
     void setBrate(int nrBrate, string* brate)
     {
-        delete[] this->brate;
+        if (this->brate != NULL)
+        {
+            delete[]this->brate;
+        }
         this->nrBrate = nrBrate;
         this->brate = new string[nrBrate];
         for (int i = 0; i < nrBrate; i++)
@@ -789,6 +831,227 @@ public:
 };
 
 int Galaxie::nrObservatie = 10;
+
+class Observatie {
+private:
+    vector <Planeta> planete;
+    vector <Constelatie> constelatii;
+    vector <Galaxie> galaxii;
+    int anObservatie;
+    int nrObservatori;
+    string* numeObservatori;
+
+public:
+    void adaugaPlaneta(const Planeta& planeta) {
+        planete.push_back(planeta);
+    }
+
+    void adaugaConstelatie(const Constelatie& constelatie) {
+        constelatii.push_back(constelatie);
+    }
+
+    void adaugaGalaxie(const Galaxie& galaxie) {
+        galaxii.push_back(galaxie);
+    }
+
+    Observatie(vector <Planeta> planete, vector <Constelatie> constelatii, vector <Galaxie> galaxii, int nrObservatori, int anObservatie, string* numeObservatori)
+    {
+        this->planete = planete;
+        this->constelatii = constelatii;
+        this->galaxii = galaxii;
+        this->nrObservatori = nrObservatori;
+        this->anObservatie = anObservatie;
+        if (this->numeObservatori != NULL)
+        {
+            delete[]this->numeObservatori;
+        }
+        this->numeObservatori = new string[nrObservatori];
+        for (int i = 0; i < nrObservatori; i++)
+        {
+            this->numeObservatori[i] = numeObservatori[i];
+        }
+    }
+
+    Observatie(const Observatie& o)
+    {
+        this->planete = o.planete;
+        this->constelatii = o.constelatii;
+        this->galaxii = o.galaxii;
+        this->nrObservatori = o.nrObservatori;
+        this->anObservatie = o.anObservatie;
+        if (this->numeObservatori != NULL)
+        {
+            delete[]this->numeObservatori;
+        }
+        this->numeObservatori = new string[o.nrObservatori];
+        for (int i = 0; i < o.nrObservatori; i++)
+        {
+            this->numeObservatori[i] = o.numeObservatori[i];
+        }
+    }
+
+    ~Observatie()
+    {
+        if (this->numeObservatori != NULL)
+        {
+            delete[]this->numeObservatori;
+        }
+    }
+
+    void setPlanete(vector <Planeta> planete)
+    {
+        this->planete = planete;
+    }
+
+    vector <Planeta> getPlanete()
+    {
+        return planete;
+    }
+
+    void setConstelatii(vector <Constelatie> constelatii)
+    {
+        this->constelatii = constelatii;
+    }
+
+    vector <Constelatie> getConstelatii()
+    {
+        return constelatii;
+    }
+
+    void setGalaxii(vector <Galaxie> galaxii)
+    {
+        this->galaxii = galaxii;
+    }
+
+    vector <Galaxie> getGalaxii()
+    {
+        return galaxii;
+    }
+
+    void setAnObservatie(int anObservatie)
+    {
+        this->anObservatie = anObservatie;
+    }
+
+    int getAnObservatie()
+    {
+        return anObservatie;
+    }
+
+    void setNrObservatori(int nrObservatori)
+    {
+        this->nrObservatori = nrObservatori;
+    }
+
+    int getNrObservatori()
+    {
+        return nrObservatori;
+    }
+
+    void setNumeObservatori(string* numeObservatori, int nrObservatori)
+    {
+        this->nrObservatori = nrObservatori;
+        this->numeObservatori = new string[nrObservatori];
+        for (int i = 0; i < nrObservatori; i++)
+        {
+            this->numeObservatori[i] = numeObservatori[i];
+        }
+    }
+
+    string* getNumeObservatori()
+    {
+        return numeObservatori;
+    }
+
+    Observatie operator=(const Observatie& o)
+    {
+        if (this != &o)
+        {
+            this->planete = o.planete;
+            this->constelatii =o.constelatii;
+            this->galaxii = o.galaxii;
+            this->anObservatie = o.anObservatie;
+            this->nrObservatori = o.nrObservatori;
+            if (this->numeObservatori != NULL)
+            {
+                delete[]this->numeObservatori;
+            }
+            this->numeObservatori = new string[o.nrObservatori];
+            for (int i = 0; i < o.nrObservatori; i++)
+            {
+                this->numeObservatori[i] = o.numeObservatori[i];
+            }
+        }
+        return *this;
+    }
+
+    friend istream& operator>>(istream& in, Observatie& o) {
+        int numarPlanete, numarConstelatii, numarGalaxii;
+
+        cout << "Introduceti numarul de planete: ";
+        in >> numarPlanete;
+        for (int i = 0; i < numarPlanete; ++i) {
+            Planeta planeta;
+            in >> planeta;
+            o.adaugaPlaneta(planeta);
+        }
+
+        cout << "Introduceti numarul de constelatii: ";
+        in >> numarConstelatii;
+        for (int i = 0; i < numarConstelatii; ++i) {
+            Constelatie constelatie;
+            in >> constelatie;
+            o.adaugaConstelatie(constelatie);
+        }
+
+        cout << "Introduceti numarul de galaxii: ";
+        in >> numarGalaxii;
+        for (int i = 0; i < numarGalaxii; ++i) {
+            Galaxie galaxie;
+            in >> galaxie;
+            o.adaugaGalaxie(galaxie);
+        }
+
+        cout << "An observatie: ";
+        in >> o.anObservatie;
+        cout << endl;
+
+        cout << "Numar observatori: ";
+        in >> o.nrObservatori;
+        cout << endl;
+
+        cout << "Nume observatori: ";
+        for (int i = 0; i < o.nrObservatori; i++)
+        {
+            cout << "Observatorul " << i + 1 << ": " << endl;
+            in >> o.numeObservatori[i];
+            cout << endl;
+        }
+        cout << endl;
+
+        return in;
+    }
+
+    friend ostream& operator<<(ostream& out, const Observatie& o) {
+        out << "Planete: ";
+        for (const auto& planeta : o.planete) {
+            out << planeta << endl;
+        }
+
+        out << "Constelatii: ";
+        for (const auto& constelatie : o.constelatii) {
+            out << constelatie << endl;
+        }
+
+        out << "Galaxii: ";
+        for (const auto& galaxie : o.galaxii) {
+            out << galaxie << endl;
+        }
+
+        return out;
+    }
+
+};
 
 void prelucrareAstronomica1(const Planeta& planeta)
 {
