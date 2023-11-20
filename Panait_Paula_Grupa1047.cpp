@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include<vector>
 using namespace std;
 
 #define BLUE "\033[34m"
@@ -1005,90 +1006,68 @@ void main()
     cout << afisareGreutate(p1);
     cout << " " << endl;
     cout << " " << endl;
-    cout << GREEN << "Vectorul: " << RESET << endl;
-    cout << " " << endl;
-    int n;
-    cout << "Introduceti numarul de planete: ";
-    cin >> n;
 
-    Planeta* vectorPlanete = new Planeta[n];
-    for (int i = 0; i < n; i++)
-    {
-        cout << "Introduceti detaliile pentru planeta " << i + 1 << ":" << endl;
+    cout << GREEN << "Vectorii: " << RESET << endl;
+    
+    const int numar_obiecteP = 2;
+    vector <Planeta> vectorPlanete(numar_obiecteP);
+
+    for (int i = 0; i < numar_obiecteP; ++i) {
+        cout << "Introduceti datele pentru obiectul Planeta la pozitia " << i << endl;
         cin >> vectorPlanete[i];
     }
+    cout << endl << endl;
+    for (int i = 0; i < numar_obiecteP; ++i) {
+        cout << "Afisare obiect Planeta la pozitia " << i << endl;
+        cout << vectorPlanete[i] << endl;
+    }
 
-    cout << "Introduceti numarul de constelatii: ";
-    cin >> n;
+    const int numar_obiecteC = 2;
+    vector <Constelatie> vectorConstelatii(numar_obiecteC);
 
-    Constelatie* vectorConstelatii = new Constelatie[n];
-    for (int i = 0; i < n; i++)
-    {
-        cout << "Introduceti detaliile pentru constelatia " << i + 1 << ":" << endl;
+    for (int i = 0; i < numar_obiecteC; ++i) {
+        cout << "Introduceti datele pentru obiectul Constelatie la pozitia " << i << endl;
         cin >> vectorConstelatii[i];
     }
-
-    cout << "Introduceti numarul de galaxii: ";
-    cin >> n;
-
-    Galaxie* vectorGalaxii = new Galaxie[n];
-    for (int i = 0; i < n; i++)
-    {
-        cout << "Introduceti detaliile pentru galaxia " << i + 1 << ":" << endl;
-        cin >> vectorGalaxii[i];
+    cout << endl << endl;
+    for (int i = 0; i < numar_obiecteC; ++i) {
+        cout << "Afisare obiect Constelatie la pozitia " << i << endl;
+        cout << vectorConstelatii[i] << endl;
     }
 
-    for (int i = 0; i < n; i++)
-    {
-        cout << "Planeta " << i + 1 << ":" << endl;
-        cout << vectorPlanete[i];
+    const int numar_obiecteG = 2;
+    vector <Galaxie> vectorGalaxie(numar_obiecteG);
+
+    for (int i = 0; i < numar_obiecteG; ++i) {
+        cout << "Introduceti datele pentru obiectul Galaxie la pozitia " << i << endl;
+        cin >> vectorPlanete[i];
+    }
+    cout << endl << endl;
+    for (int i = 0; i < numar_obiecteG; ++i) {
+        cout << "Afisare obiect Galaxie la pozitia " << i << endl;
+        cout << vectorPlanete[i] << endl;
     }
 
-    for (int i = 0; i < n; i++)
-    {
-        cout << "Constelatia " << i + 1 << ":" << endl;
-        cout << vectorConstelatii[i];
+    cout << GREEN << "Matricea: " << RESET << endl;
+    cout << " " << endl;
+
+    const int numar_linii = 2;
+    const int numar_coloane = 2;
+
+    Planeta matricePlanete[numar_linii][numar_coloane];
+
+    for (int i = 0; i < numar_linii; ++i) {
+        for (int j = 0; j < numar_coloane; ++j) {
+            cout << "Introduceti datele pentru obiectul Planeta la pozitia [" << i << "][" << j << "]" << endl;
+            cin >> matricePlanete[i][j];
+            cout << endl;
+        }
     }
 
-    for (int i = 0; i < n; i++)
-    {
-        cout << "Galaxia " << i + 1 << ":" << endl;
-        cout << vectorGalaxii[i];
+    for (int i = 0; i < numar_linii; ++i) {
+        for (int j = 0; j < numar_coloane; ++j) {
+            cout << "Afisare obiect Planeta la pozitia [" << i << "][" << j << "]" << endl;
+            cout << matricePlanete[i][j] << endl;
+        }
     }
-
-    //cout << GREEN << "Matricea: " << RESET << endl;
-    //cout << " " << endl;
-
-    //int lin;
-    //int col;
-
-    //cout << "Introduceti numarul de linii si coloane pentru matricea de planete: ";
-    //cin >> lin >> col;
-
-    //Planeta** matricePlanete = new Planeta * [lin];
-    //for (int i = 0; i < lin; i++)
-    //{
-    //    matricePlanete[i] = new Planeta[col];
-    //    for (int j = 0; j < col; j++)
-    //    {
-    //        cout << "Introduceti detaliile pentru planeta de la pozitia [" << i + 1 << "][" << j + 1 << "]:" << endl;
-    //        cin >> matricePlanete[i][j];
-    //    }
-    //}
-
-    //for (int i = 0; i < lin; i++)
-    //{
-    //    for (int j = 0; j < col; j++)
-    //    {
-    //        cout << "Planeta [" << i + 1 << "][" << j + 1 << "]:" << endl;
-    //        cout << matricePlanete[i][j];
-    //    }
-    //}
-
-    //for (int i = 0; i < lin; i++) {
-    //    delete[] matricePlanete[i];
-    //}
-    //delete[] matricePlanete;
-
-    //citesteMatrice(matricePlanete, lin, col);
 }
