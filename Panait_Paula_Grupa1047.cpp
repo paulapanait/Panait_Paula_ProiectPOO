@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
-#include<vector>
+#include <vector>
+#include <fstream>
+#include <cstring>
 using namespace std;
 
 #define BLUE "\033[34m"
@@ -265,6 +267,22 @@ public:
         return p.greutate;
     }
 
+    friend ofstream& operator<<(ofstream& out, const Planeta& planeta)
+    {
+        out << planeta.nume << endl;
+        out << planeta.nrSateliti << endl;
+        return out;
+    }
+
+    friend ifstream& operator>>(ifstream& is, Planeta& planeta)
+    {
+        is >> planeta.nume;
+        cout << endl;
+        is >> planeta.nrSateliti;
+        cout << endl;
+        return is;
+    }
+
     void afisareStaticaPlaneta()
     {
         cout << "A " << locSistem << "-a planeta de la Soare," << endl;
@@ -508,6 +526,22 @@ public:
             throw out_of_range("Index invalid pentru nebuloase");
         }
         return nebuloase[index];
+    }
+
+    friend ofstream& operator<<(ofstream& out, const Constelatie& constelatie)
+    {
+        out << constelatie.nume << endl;
+        out << constelatie.nrStele << endl;
+        return out;
+    }
+
+    friend ifstream& operator>>(ifstream& is, Constelatie& constelatie)
+    {
+        is >> constelatie.nume;
+        cout << endl;
+        is >> constelatie.nrStele;
+        cout << endl;
+        return is;
     }
 
     void afisareStaticaConstelatie()
@@ -762,6 +796,22 @@ public:
         cout << "A " << nrObservatie << "-a galaxie observata anul acesta " << endl;
     }
 
+    /*friend ofstream& operator<<(ofstream& out, const Galaxie& galaxie)
+    {
+        out << galaxie.nume << endl;
+        out << galaxie.nrBrate << endl;
+        return out;
+    }
+
+    friend ifstream& operator>>(ifstream& is, Galaxie& galaxie)
+    {
+        is >> galaxie.nume;
+        cout << endl;
+        is >> galaxie.nrBrate;
+        cout << endl;
+        return is;
+    }*/
+
     void afisareGalaxie()
     {
         cout << "poarta numele de " << nume << ", " << endl;
@@ -893,6 +943,22 @@ public:
         cout << endl;
         return in;
     }
+
+    /*friend ofstream& operator<<(ofstream& out, const Observatii& observatii)
+    {
+        out << observatii.numeObservator << endl;
+        out << observatii.anObservatie << endl;
+        return out;
+    }
+
+    friend ifstream& operator>>(ifstream& is, Observatii& observatii)
+    {
+        is >> observatii.numeObservator;
+        cout << endl;
+        is >> observatii.anObservatie;
+        cout << endl;
+        return is;
+    }*/
 };
 
 void main()
@@ -919,7 +985,7 @@ void main()
     string* nebuloase = new string[1];
     nebuloase[0] = "Nebuloasa Orion";
 
-    Constelatie c1("Carul Mare");
+    Constelatie c1("Carul_Mare");
     c1.afisareStaticaConstelatie();
     c1.afisareConstelatie();
 
@@ -1091,7 +1157,7 @@ void main()
 
     cout << GREEN << "Vectorii: " << RESET << endl;
 
-    const int numar_obiecteP = 2;
+    /*const int numar_obiecteP = 2;
     vector <Planeta> vectorPlanete(numar_obiecteP);
 
     for (int i = 0; i < numar_obiecteP; ++i) {
@@ -1102,9 +1168,9 @@ void main()
     for (int i = 0; i < numar_obiecteP; ++i) {
         cout << "Afisare obiect Planeta la pozitia " << i << endl;
         cout << vectorPlanete[i] << endl;
-    }
+    }*/
 
-    const int numar_obiecteC = 2;
+    /*const int numar_obiecteC = 2;
     vector <Constelatie> vectorConstelatii(numar_obiecteC);
 
     for (int i = 0; i < numar_obiecteC; ++i) {
@@ -1115,9 +1181,9 @@ void main()
     for (int i = 0; i < numar_obiecteC; ++i) {
         cout << "Afisare obiect Constelatie la pozitia " << i << endl;
         cout << vectorConstelatii[i] << endl;
-    }
+    }*/
 
-    const int numar_obiecteG = 2;
+    /*const int numar_obiecteG = 2;
     vector <Galaxie> vectorGalaxie(numar_obiecteG);
 
     for (int i = 0; i < numar_obiecteG; ++i) {
@@ -1128,12 +1194,12 @@ void main()
     for (int i = 0; i < numar_obiecteG; ++i) {
         cout << "Afisare obiect Galaxie la pozitia " << i << endl;
         cout << vectorPlanete[i] << endl;
-    }
+    }*/
 
     cout << GREEN << "Matricea: " << RESET << endl;
     cout << " " << endl;
 
-    const int numar_linii = 2;
+   /* const int numar_linii = 2;
     const int numar_coloane = 2;
 
     Planeta matricePlanete[numar_linii][numar_coloane];
@@ -1151,7 +1217,7 @@ void main()
             cout << "Afisare obiect Planeta la pozitia [" << i << "][" << j << "]" << endl;
             cout << matricePlanete[i][j] << endl;
         }
-    }
+    }*/
 
     Observatii observ1("KOKO", 1983, g2);
     cout << observ1.getGalaxie() << endl;
@@ -1167,4 +1233,41 @@ void main()
     cout << observ2 << endl;
     cin >> observ2;
     cout << observ2 << endl;
+
+	ofstream afisarePlaneta("Planeta.txt", ios::out);
+	afisarePlaneta << p1;
+	afisarePlaneta.close();
+
+	ifstream citirePlaneta("Planeta.txt", ios::in);
+	citirePlaneta >> p2;
+	cout << p2;
+	citirePlaneta.close();
+
+    ofstream afisareConstelatie("Constelatie.txt", ios::out);
+    afisareConstelatie << c1;
+    afisareConstelatie.close();
+
+    ifstream citireConstelatie("Constelatie.txt", ios::in);
+    citireConstelatie >> c2;
+    cout << c2;
+    citireConstelatie.close();
+
+	int nrBrate = 2;
+	char sir[100] = "text salvat in fisier binar";
+
+	fstream f("Galaxie.bin", ios::out | ios::binary);
+
+	f.write((char*)&nrBrate, sizeof(int));
+	int lungimeg = strlen(sir) + 1;
+	f.write((char*)&lungimeg, sizeof(int));
+	f.write((char*)sir, lungimeg);
+	f.close();
+
+	fstream g("Observatie.bin", ios::binary | ios::out);
+    
+    g.write((char*)&nrBrate, sizeof(int));
+    int lungimeo = strlen(sir) + 1;
+    g.write((char*)&lungimeo, sizeof(int));
+    g.write((char*)sir, lungimeo);
+    g.close();
 }
