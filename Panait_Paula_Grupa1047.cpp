@@ -312,6 +312,100 @@ public:
 
 int Planeta::locSistem = 0;
 
+class PlanetaTelurica : public Planeta
+{
+private:
+    string tipuriRoci;
+    string culori;
+    string tipuriInvelisuri;
+    string nume;
+
+public:
+    PlanetaTelurica() : Planeta("Pamant", 140000)
+    {
+        this->tipuriRoci = "vulcanice, sedimentare, carbonatice, metamorfice";
+        this->culori = "albastru, verde, maro, alb";
+        this->tipuriInvelisuri = "scoarta terestra, mantaua externa, mantaua interna, stratul nucleului extern, stratul nucleului intern";
+    }
+
+    PlanetaTelurica(string nume, string tipuriRoci, string culori, string tipuriInvelisuri) : Planeta()
+    {
+        this->nume = nume;
+        this->tipuriRoci = tipuriRoci;
+        this->culori = culori;
+        this->tipuriInvelisuri = tipuriInvelisuri;
+    }
+
+    PlanetaTelurica(const PlanetaTelurica& pt) : Planeta()
+    {
+        this->nume = pt.nume;
+        this->tipuriRoci = pt.tipuriRoci;
+        this->culori = pt.culori;
+        this->tipuriInvelisuri = pt.tipuriInvelisuri;
+    }
+
+
+    PlanetaTelurica operator=(const PlanetaTelurica& pt)
+    {
+        if (this != &pt)
+        {
+            Planeta ::operator=(pt);
+            this->nume = pt.nume;
+            this->tipuriRoci = pt.tipuriRoci;
+            this->culori = pt.culori;
+            this->tipuriInvelisuri = pt.tipuriInvelisuri;
+        }
+        return *this;
+    }
+
+    friend ostream& operator<<(ostream& ecran, const PlanetaTelurica& pt)
+    {
+        ecran << (Planeta)pt << endl;
+        ecran << "Nume: " << pt.nume << endl;
+        ecran << "Tipuri roci: " << pt.tipuriRoci << endl;
+        ecran << "Culori: " << pt.culori << endl;
+        ecran <<"Tipuri invelisuri: " << pt.tipuriInvelisuri << endl;
+        return ecran;
+    }
+
+    friend istream& operator>>(istream& tast, PlanetaTelurica& pt)
+    {
+        tast >> (Planeta&)pt;
+        cout << "Nume: ";
+        tast >> pt.nume;
+        cout << "Tipuri roci: ";
+        tast >> pt.tipuriRoci;
+        cout << endl;
+        cout << "Culori: ";
+        tast >> pt.culori;
+        cout << endl;
+        cout << "Tipuri invelisuri: ";
+        tast >> pt.tipuriInvelisuri;
+        cout << endl;
+        return tast;
+    }
+
+    void setRoci(string tipRocuriRoci)
+    {
+        this->tipuriRoci = tipuriRoci;
+    }
+
+    string getRoci()
+    {
+        return this->tipuriRoci;
+    }
+
+    void setInvelisuri(string tipuriInvelisuri)
+    {
+        this->tipuriInvelisuri = tipuriInvelisuri;
+    }
+
+    string getInvelisuri()
+    {
+        return this->tipuriInvelisuri;
+    }
+};
+
 class Constelatie
 {
 private:
@@ -572,6 +666,122 @@ public:
 };
 
 int Constelatie::nrObservatie = 20;
+
+class ConstelatieZodiacala : public Constelatie
+{
+private:
+    char* constelatiiZodiacaleVecine;
+    string ziAparitie;
+    string ziDisparitie;
+    string nume;
+
+public:
+    ConstelatieZodiacala() : Constelatie("Pesti")
+    {
+        /*mentionez ca datele au fost culese cu ajutorul soft-ului "Stellarium",
+        motiv pentru care nu se potrivesc mereu celor oferite de astrologi,
+        insa se bazeaza pe observatii astronomice si calcule astrofizice concrete,
+        alaturi de posibile previziuni pentru urmatorii ani*/
+        this->ziAparitie = "20 aprilie";
+        this->ziDisparitie = "15 decembrie";
+        this->constelatiiZodiacaleVecine = new char[strlen("Varsator si Berbec") + 1];
+        strcpy_s(this->constelatiiZodiacaleVecine, strlen("Varsator si Berbec") + 1, "Varsator si Berbec");
+    }
+
+    ConstelatieZodiacala(string nume, string ziAparitie, string ziDisparitie, const char* constelatiiZodiacaleVecine) : Constelatie(getNume())
+    {
+        this->nume = nume;
+        this->ziAparitie = ziAparitie;
+        this->ziDisparitie = ziDisparitie;
+        this->constelatiiZodiacaleVecine = new char[strlen(constelatiiZodiacaleVecine) + 1];
+        strcpy_s(this->constelatiiZodiacaleVecine, strlen(constelatiiZodiacaleVecine) + 1, constelatiiZodiacaleVecine);
+    }
+
+    ConstelatieZodiacala(const ConstelatieZodiacala& cz) : Constelatie(cz)
+    {
+        this->nume = cz.nume;
+        this->ziAparitie = cz.ziAparitie;
+        this->ziDisparitie = cz.ziDisparitie;
+        this->constelatiiZodiacaleVecine = new char[strlen(cz.constelatiiZodiacaleVecine) + 1];
+        strcpy_s(this->constelatiiZodiacaleVecine, strlen(cz.constelatiiZodiacaleVecine) + 1, cz.constelatiiZodiacaleVecine);
+    }
+
+    ~ConstelatieZodiacala()
+    {
+        if (this->constelatiiZodiacaleVecine)
+        {
+            delete[]this->constelatiiZodiacaleVecine;
+        }
+    }
+
+    ConstelatieZodiacala operator=(const ConstelatieZodiacala& cz)
+    {
+        if (this != &cz)
+        {
+            Constelatie ::operator=(cz);
+            this->nume = cz.nume;
+            this->ziAparitie = cz.ziAparitie;
+            this->ziDisparitie = cz.ziDisparitie;
+            if (this->constelatiiZodiacaleVecine) {
+                delete[]this->constelatiiZodiacaleVecine;
+            }
+            this->constelatiiZodiacaleVecine = new char[strlen(cz.constelatiiZodiacaleVecine) + 1];
+            strcpy_s(this->constelatiiZodiacaleVecine, strlen(cz.constelatiiZodiacaleVecine) + 1, cz.constelatiiZodiacaleVecine);
+        }
+        return *this;
+    }
+
+    friend ostream& operator<<(ostream& ecran, const ConstelatieZodiacala& cz)
+    {
+        ecran << (Constelatie)cz << endl;
+        ecran << "Nume: " << cz.nume << endl;
+        ecran << "Zi aparitie: " << cz.ziAparitie << endl;
+        ecran << "Zi disparitie: " << cz.ziDisparitie << endl;
+        ecran << "Constelatii zodiacale vecine: " << cz.constelatiiZodiacaleVecine << endl;
+        return ecran;
+    }
+
+    friend istream& operator>>(istream& tast, ConstelatieZodiacala& cz)
+    {
+        tast >> (Constelatie&)cz;
+        cout << "Nume: ";
+        tast >> cz.nume;
+        cout << "Zi aparitie: ";
+        tast >> cz.ziAparitie;
+        cout << "Zi disparitie: ";
+        tast >> cz.ziDisparitie;
+        if (cz.constelatiiZodiacaleVecine)
+        {
+            delete[]cz.constelatiiZodiacaleVecine;
+        }
+        cout << "Constelatii zodiacale vecine:";
+        char buffer[30];
+        tast >> buffer;
+        cz.constelatiiZodiacaleVecine = new char[strlen(buffer) + 1];
+        strcpy_s(cz.constelatiiZodiacaleVecine, strlen(buffer) + 1, buffer);
+        return tast;
+    }
+
+    void setZiAparitie(string ziAparitie)
+    {
+        this->ziAparitie = ziAparitie;
+    }
+
+    string getZiAparitie()
+    {
+        return this->ziAparitie;
+    }
+
+    void setZiDisparitie(string ziDisparitie)
+    {
+        this->ziDisparitie = ziDisparitie;
+    }
+
+    string getZiDisparitie()
+    {
+        return this->ziDisparitie;
+    }
+};
 
 class Galaxie
 {
@@ -1167,25 +1377,25 @@ void main()
     cout << GREEN << "Matricea: " << RESET << endl;
     cout << " " << endl;
 
-     const int numar_linii = 2;
-     const int numar_coloane = 2;
+    const int numar_linii = 2;
+    const int numar_coloane = 2;
 
-     Planeta matricePlanete[numar_linii][numar_coloane];
+    Planeta matricePlanete[numar_linii][numar_coloane];
 
-     for (int i = 0; i < numar_linii; ++i) {
-         for (int j = 0; j < numar_coloane; ++j) {
-             cout << "Introduceti datele pentru obiectul Planeta la pozitia [" << i << "][" << j << "]" << endl;
-             cin >> matricePlanete[i][j];
-             cout << endl;
-         }
-     }
+    for (int i = 0; i < numar_linii; ++i) {
+        for (int j = 0; j < numar_coloane; ++j) {
+            cout << "Introduceti datele pentru obiectul Planeta la pozitia [" << i << "][" << j << "]" << endl;
+            cin >> matricePlanete[i][j];
+            cout << endl;
+        }
+    }
 
-     for (int i = 0; i < numar_linii; ++i) {
-         for (int j = 0; j < numar_coloane; ++j) {
-             cout << "Afisare obiect Planeta la pozitia [" << i << "][" << j << "]" << endl;
-             cout << matricePlanete[i][j] << endl;
-         }
-     }
+    for (int i = 0; i < numar_linii; ++i) {
+        for (int j = 0; j < numar_coloane; ++j) {
+            cout << "Afisare obiect Planeta la pozitia [" << i << "][" << j << "]" << endl;
+            cout << matricePlanete[i][j] << endl;
+        }
+    }
 
     Observatii observ1("KOKO", 1983, g2);
     cout << observ1.getGalaxie() << endl;
@@ -1238,4 +1448,28 @@ void main()
     g.write((char*)&lungimeo, sizeof(int));
     g.write((char*)sir, lungimeo);
     g.close();
-}
+
+    PlanetaTelurica pt1;
+    PlanetaTelurica pt2("Venus", "vulcanice", "rosu, galben, portocaliu, maro", "nucleu, manta, crusta");
+    PlanetaTelurica pt3 = pt1;
+    PlanetaTelurica pt4;
+    pt4 = pt2;
+
+    cout << pt1 << pt2 << pt3 << pt4 << endl;
+    cin >> pt2;
+    cout << pt2 << endl;
+
+    ConstelatieZodiacala cz1;
+    ConstelatieZodiacala cz2("Scorpion", "1 ianuarie", "1 octombrie", "Sagetator si Balanta");
+    ConstelatieZodiacala cz3 = cz1;
+    ConstelatieZodiacala cz4;
+    cz4 = cz2;
+
+    cout << cz1 << cz2 << cz3 << cz4 << endl;
+    cin >> cz2;
+    cout << cz2 << endl;
+
+    Constelatie* constelatiePtr = &cz2;
+
+    constelatiePtr->afisareConstelatie();
+};
