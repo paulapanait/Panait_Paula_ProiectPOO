@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <string>
 #include <vector>
@@ -10,7 +11,31 @@ using namespace std;
 #define YELLOW  "\033[33m"
 #define RESET "\033[0m"
 
-class Planeta
+class CorpCeresc
+{
+    string nume;
+    int nrCC;
+    string* cc;
+public:
+    virtual void descrieObiect() = 0;
+
+    CorpCeresc()
+    {
+        this->nume = "Nume corp ceresc";
+    }
+
+    void setNume(string nume)
+    {
+        this->nume = nume;
+    }
+
+    string getNume()
+    {
+        return this->nume;
+    }
+};
+
+class Planeta: public CorpCeresc
 {
 private:
     static int locSistem;
@@ -22,7 +47,12 @@ public:
     const int nrObservatii;
     string nume;
 
-    Planeta() : nume(" "), nrSateliti(0), sateliti(NULL), nrObservatii(12)
+    void descrieObiect()
+    {
+        cout << "Planeta " << this->nume << " are o greutate de " << this->greutate << endl;
+    }
+
+    Planeta() : CorpCeresc(), nume(" "), nrSateliti(0), sateliti(NULL), nrObservatii(12)
     {
         locSistem++;
         this->nume = nume;
@@ -31,7 +61,7 @@ public:
         this->sateliti = sateliti;
     }
 
-    Planeta(float greutate) : greutate(greutate), nrObservatii(12)
+    Planeta(float greutate) : CorpCeresc(), greutate(greutate), nrObservatii(12)
     {
         locSistem++;
         this->nume = "Marte";
@@ -39,7 +69,7 @@ public:
         this->sateliti = NULL;
     }
 
-    Planeta(string nume, float greutate) : nrObservatii(12)
+    Planeta(string nume, float greutate) : CorpCeresc(), nrObservatii(12)
     {
         locSistem++;
         this->nume = nume;
@@ -48,7 +78,7 @@ public:
         this->sateliti = NULL;
     }
 
-    Planeta(string nume, float greutate, int nrSateliti, string* sateliti) : nrObservatii(12)
+    Planeta(string nume, float greutate, int nrSateliti, string* sateliti) : CorpCeresc(), nrObservatii(12)
     {
         locSistem++;
         this->nume = nume;
@@ -61,7 +91,7 @@ public:
         }
     }
 
-    Planeta(const Planeta& nou) : nrObservatii(nou.nrObservatii)
+    Planeta(const Planeta& nou) :CorpCeresc(nou), nrObservatii(nou.nrObservatii)
     {
         locSistem++;
         this->nume = nou.nume;
@@ -76,7 +106,7 @@ public:
 
     ~Planeta()
     {
-        delete[] this->sateliti;
+       delete[] this->sateliti;
     }
 
     string getNume() const
@@ -130,6 +160,7 @@ public:
     {
         if (this != &p)
         {
+            CorpCeresc::operator=(p);
             this->nume = p.nume;
             this->greutate = p.greutate;
             this->nrSateliti = p.nrSateliti;
@@ -255,12 +286,13 @@ public:
 
     const string& operator[](int index)
     {
-        if (index < 0 && index >= nrSateliti)
+        if (index <= 0 && index > nrSateliti)
         {
             throw out_of_range("Index invalid pentru sateliti");
         }
         return sateliti[index];
     }
+
 
     friend int afisareGreutate(const Planeta& p)
     {
@@ -404,6 +436,31 @@ public:
     {
         return this->tipuriInvelisuri;
     }
+};
+
+class VectorCC
+{
+    int nrCC;
+    CorpCeresc** corpuriCeresti;
+
+public:
+    VectorCC()
+    {
+        this->nrCC = 10;
+        this->corpuriCeresti = new CorpCeresc * [10];
+        for (int i = 0; i < 10; i++)
+        {
+            this->corpuriCeresti[i] = new Planeta;
+        }
+    };
+
+        CorpCeresc*& operator[](int i)
+        {
+            if (i >= 0 && i < this->nrCC)
+            {
+                return this->corpuriCeresti[i];
+            }
+        }
 };
 
 class Constelatie
@@ -783,7 +840,29 @@ public:
     }
 };
 
-class Galaxie
+class Univers
+{
+    string nume;
+public:
+    virtual void descrieObiectul() = 0;
+    
+    Univers()
+    {
+        this->nume = "Galaxie";
+    }
+
+    string getNume()
+    {
+        return this->nume;
+    }
+
+    void setNume(string nume)
+    {
+        this->nume = nume;
+    }
+};
+
+class Galaxie: public Univers
 {
 private:
     static int nrObservatie;
@@ -797,7 +876,12 @@ public:
     const int nrObservatii;
     string nume;
 
-    Galaxie() : nume(" "), nrObiecte(0), lungime(0), spirala(0), nrBrate(0), brate(NULL), nrObservatii(12)
+    void descrieObiectul()
+    {
+        cout << "Galaxia " << this->nume << " are o lungime de " << this->lungime << endl;
+    }
+
+    Galaxie() : Univers(), nume(" "), nrObiecte(0), lungime(0), spirala(0), nrBrate(0), brate(NULL), nrObservatii(12)
     {
         nrObservatie++;
         this->nume = nume;
@@ -808,7 +892,7 @@ public:
         this->spirala = spirala;
     }
 
-    Galaxie(string nume) : nrObservatii(3)
+    Galaxie(string nume) : Univers(), nrObservatii(3)
     {
         nrObservatie++;
         this->nume = nume;
@@ -830,7 +914,7 @@ public:
         this->brate = NULL;
     }
 
-    Galaxie(string nume, int nrBrate, string* brate) : nrObservatii(3)
+    Galaxie(string nume, int nrBrate, string* brate) : Univers(), nrObservatii(3)
     {
         nrObservatie++;
         this->nume = nume;
@@ -845,7 +929,7 @@ public:
         }
     }
 
-    Galaxie(const Galaxie& nou) : nrObservatii(nou.nrObservatii)
+    Galaxie(const Galaxie& nou) : Univers(nou), nrObservatii(nou.nrObservatii)
     {
         nrObservatie++;
         this->nume = nou.nume;
@@ -935,6 +1019,7 @@ public:
     {
         if (this != &g)
         {
+            Univers::operator=(g);
             this->nume = g.nume;
             this->lungime = g.lungime;
             this->nrObiecte = g.nrObiecte;
@@ -1055,6 +1140,31 @@ void citesteMatrice(int matrice[][100], int nrLinii, int nrColoane) {
         }
     }
 }
+
+class VectorU
+{
+    int nrU;
+    Univers** corpuriU;
+
+public:
+    VectorU()
+    {
+        this->nrU = 10;
+        this->corpuriU = new Univers * [10];
+        for (int i = 0; i < 10; i++)
+        {
+            this->corpuriU[i] = new Galaxie;
+        }
+    };
+
+    Univers*& operator[](int i)
+    {
+        if (i >= 0 && i < this->nrU)
+        {
+            return this->corpuriU[i];
+        }
+    }
+};
 
 class Observatii {
 private:
@@ -1382,16 +1492,20 @@ void main()
 
     Planeta matricePlanete[numar_linii][numar_coloane];
 
-    for (int i = 0; i < numar_linii; ++i) {
-        for (int j = 0; j < numar_coloane; ++j) {
+    for (int i = 0; i < numar_linii; ++i)
+    {
+        for (int j = 0; j < numar_coloane; ++j)
+        {
             cout << "Introduceti datele pentru obiectul Planeta la pozitia [" << i << "][" << j << "]" << endl;
             cin >> matricePlanete[i][j];
             cout << endl;
         }
     }
 
-    for (int i = 0; i < numar_linii; ++i) {
-        for (int j = 0; j < numar_coloane; ++j) {
+    for (int i = 0; i < numar_linii; ++i)
+    {
+        for (int j = 0; j < numar_coloane; ++j)
+        {
             cout << "Afisare obiect Planeta la pozitia [" << i << "][" << j << "]" << endl;
             cout << matricePlanete[i][j] << endl;
         }
@@ -1472,4 +1586,42 @@ void main()
     Constelatie* constelatiePtr = &cz2;
 
     constelatiePtr->afisareConstelatie();
+
+    Planeta p10;
+    p10.descrieObiect();
+
+    Galaxie g10;
+    g10.descrieObiectul();
+
+    CorpCeresc* cc;
+    cc = new Planeta();
+    cc->descrieObiect();
+
+    Univers* u;
+    u = new Galaxie();
+    u->descrieObiectul();
+
+    VectorCC v1;
+    v1[0] = new Planeta("Mercur", 10736);
+    v1[1] = new Planeta("Venus", 22349483173);
+    v1[2] = new Planeta("Pamant", 302857);
+    v1[3] = new Planeta("Marte", 46392);
+    v1[4] = new Planeta("Jupiter", 230493256);
+    v1[5] = new Planeta("Saturn", 4694325263);
+    v1[6] = new Planeta("Uranus", 403832467);
+    v1[7] = new Planeta("Neptun", 5830384);
+    v1[8] = new Planeta("Makemake", 4638);
+    v1[9] = new Planeta("Eris", 4738);
+
+    VectorU u1;
+    u1[0] = new Galaxie("Calea_Lactee");
+    u1[1] = new Galaxie("Andromeda");
+    u1[2] = new Galaxie("Antennae");
+    u1[3] = new Galaxie("Retrograda");
+    u1[4] = new Galaxie("Bode");
+    u1[5] = new Galaxie("Fluture");
+    u1[6] = new Galaxie("Trabuc");
+    u1[7] = new Galaxie("Compasul");
+    u1[8] = new Galaxie("Cometa");
+    u1[9] = new Galaxie("Artificiilor");
 };
